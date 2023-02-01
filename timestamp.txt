@@ -1,13 +1,35 @@
-import JSEncrypt from 'jsencrypt';
-import React from 'react';
-//import styled from 'styled-components';
+"10:00": 1675245600
+"10:30": 1675247400
+"11:00": 1675249200
+"11:30": 1675251000
+"12:00": 1675252800
+"12:30": 1675254600
+"13:00": 1675256400
+"13:30": 1675258200
+"14:00": 1675260000
+"14:30": 1675261800
+"15:00": 1675263600
+"15:30": 1675265400
 
-import Button from '../../UI/Button/Button';
-import styles from './SerchCard.css'
-import fakeData from "../../../Dummy/fakeData.json";
+1675265400,1675263600,
+
+"temperature":[
+      12, 13.5, 15, 16.5, 16, 17, 15.4, 14.4, 17.6, 13.4, 14.6, 15.9
+    ]
+
+ 1675245600, 1675247400, 1675249200, 1675251000, 1675252800, 1675254600, 1675256400, 1675258200, 1675260000, 1675261800, 1675263600, 1675265400
 
 
-const SearchCard = props => { 
+var publicKey = `
+  -----BEGIN PUBLIC KEY-----
+MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQB3bSZdzmetXrDAtVBJwhsV
+wIekzJo/n3U9cGGUreAipACwv5i9mijvLzqtyhxFTIFuViYLK0l+xl5tdxqwqZTd
+5A3XL691FLFEmxnrQYiQRYxPS/aMjLK5RcjZGScPKJp4YmVfXtEQrshFYosJ0qgF
+/lzoLH6kJpOYGSJnzvtLyi/2yrPYGvpiWgZze4BxeSBZ0hR7YPC6fR3h8w9ai+vM
+UaAPTRQQxzUWln9Z1HU9sJGGwTF2GXlCGUjbSdTSbmi57i1lGOQI+c+0jW1nNBQe
+USLmsB4V4MG2Vb/NkRKi93mSElP6gqjqzyZOjbgXEw4p8GCLnBSJAYqJwInMZRdP
+AgMBAAE=
+-----END PUBLIC KEY-----`;
 
     var privateKey = `
     -----BEGIN RSA PRIVATE KEY-----
@@ -37,45 +59,3 @@ fZr5HsE9K9lkp/BhQT4/U1YGxlpdQxmCeguWIf06Q9rde8RJC2htHNV2gm72KzmX
 NtfJPymGKK/kJZqFz5aU8R35em9YpplhRONnWjmjrjejGPXMpC5eH7rN9hTiYHip
 YtIIWD8eFI1iEUim2LKFbCjaK+tw4mGhXFdLH3He9H32HNLTpw==
 -----END RSA PRIVATE KEY-----`
-
-
-  const decrypt=event=>
-  {
-
-    event.preventDefault();
-  
-    console.log(fakeData.temperature);
-    
-    var decrypt = new JSEncrypt();
-    decrypt.setPrivateKey(privateKey);
-    var uncrypted = decrypt.decrypt(fakeData.temperature);
-    var splittedUnencrypted= uncrypted.split(", ");
-    var numericalSplittedUnencrypted = splittedUnencrypted.map(x=> Number(x));
-    console.log(numericalSplittedUnencrypted);
-    console.log(fakeData.timeStamps);
-
-    props.onSearchParcel({
-      title:'Invalid Input',
-      message: 'Age must be greater than 1',
-      reaction: 'Got it'
-  });
-
-  props.onGetNodeDetails({
-    title:'ROYAL OSCIETRA CAVIAR',
-    location:'Train Cargo, ICE 772, Frankfurt',
-    temperature: numericalSplittedUnencrypted,
-    timeStamps: fakeData.timeStamps
-  })
-
-  }
-  return (
-    <form >
-      <div className={`${styles['form-control']}`}>
-        <input placeholder='Enter Parcel Tracking Id' type="text"/>
-      </div>
-      <Button onClick={decrypt} type="submit">Search Parcel</Button>
-    </form>
-  );
-};
-
-export default SearchCard;
